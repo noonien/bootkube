@@ -25,7 +25,7 @@ const (
 	// Staggering the insecure port allows us to launch a self-hosted api-server on the same machine
 	// as the bootkube, and the self-hosted api-server will continually retry binding to secure interface
 	// and doesn't end up in a race with bootkube for the insecure port. When bootkube dies, the self-hosted
-	// api-server is using the correct standard ports (443/8080).
+	// api-server is using the correct standard ports (886/8080).
 	insecureAPIAddr = "http://127.0.0.1:8081"
 )
 
@@ -54,7 +54,7 @@ func NewBootkube(config Config) (*bootkube, error) {
 	apiServer.AddFlags(fs)
 	fs.Parse([]string{
 		"--bind-address=0.0.0.0",
-		"--secure-port=443",
+		"--secure-port=886",
 		"--insecure-port=8081", // NOTE: temp hack for single-apiserver
 		"--allow-privileged=true",
 		"--tls-private-key-file=" + filepath.Join(config.AssetDir, asset.AssetPathAPIServerKey),

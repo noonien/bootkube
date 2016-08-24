@@ -34,7 +34,7 @@ function extract_master_endpoint (){
     grep 'client-key-data' ${KUBECONFIG} | awk '{print $2}'| base64 -d > /home/core/client.key
 
     MASTER_PUB="$(awk '/server:/ {print $2}' ${KUBECONFIG} | awk -F/ '{print $3}' | awk -F: '{print $1}')"
-    MASTER_PRIV=$(curl https://${MASTER_PUB}:443/api/v1/namespaces/default/endpoints/kubernetes \
+    MASTER_PRIV=$(curl https://${MASTER_PUB}:886/api/v1/namespaces/default/endpoints/kubernetes \
         --cacert /home/core/ca.crt --cert /home/core/client.crt --key /home/core/client.key \
         | jq -r '.subsets[0].addresses[0].ip')
     rm -f /home/core/ca.crt /home/core/client.crt /home/core/client.key

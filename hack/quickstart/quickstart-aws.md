@@ -13,7 +13,7 @@ Next, create the security group rules.
 
 ```
 $ aws ec2 authorize-security-group-ingress --region us-west-2 --group-name k8s-sg --protocol tcp --port 22 --cidr 0.0.0.0/0
-$ aws ec2 authorize-security-group-ingress --region us-west-2 --group-name k8s-sg --protocol tcp --port 443 --cidr 0.0.0.0/0
+$ aws ec2 authorize-security-group-ingress --region us-west-2 --group-name k8s-sg --protocol tcp --port 886 --cidr 0.0.0.0/0
 $ aws ec2 authorize-security-group-ingress --region us-west-2 --group-name k8s-sg --protocol tcp --port 0-65535 --source-group k8s-sg
 ```
 

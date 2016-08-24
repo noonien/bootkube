@@ -12,11 +12,11 @@ $ gcloud compute instances create k8s-core1 \
   --zone us-central1-a --machine-type n1-standard-1
 ```
 
-Tag the first node as an apiserver node, and allow traffic to 443 on that node.
+Tag the first node as an apiserver node, and allow traffic to 886 on that node.
 
 ```
 $ gcloud compute instances add-tags k8s-core1 --tags apiserver
-$ gcloud compute firewall-rules create api-443 --target-tags=apiserver --allow tcp:443
+$ gcloud compute firewall-rules create api-886 --target-tags=apiserver --allow tcp:443
 ```
 
 ### Bootstrap Master

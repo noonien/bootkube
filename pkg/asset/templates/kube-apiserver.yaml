@@ -30,7 +30,7 @@ spec:
         - /hyperkube
         - apiserver
         - --bind-address=0.0.0.0
-        - --secure-port=443
+        - --secure-port=886
         - --insecure-port=8080
         - --advertise-address=$(MY_POD_IP)
         - --etcd-servers={{ range $i, $e := .EtcdServers }}{{ if $i }},{{end}}{{ $e }}{{end}}

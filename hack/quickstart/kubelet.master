@@ -12,7 +12,7 @@ ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
 ExecStartPre=/bin/mkdir -p /srv/kubernetes/manifests
 ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
 ExecStart=/usr/lib/coreos/kubelet-wrapper \
-  --api-servers=https://${COREOS_PRIVATE_IPV4}:443 \
+  --api-servers=https://${COREOS_PRIVATE_IPV4}:886 \
   --kubeconfig=/etc/kubernetes/kubeconfig \
   --lock-file=/var/run/lock/kubelet.lock \
   --exit-on-lock-contention \

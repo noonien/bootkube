@@ -72,11 +72,7 @@ function init_master_node() {
     systemctl enable flanneld; sudo systemctl start flanneld
 
     # Render cluster assets
-    /usr/bin/rkt run \
-        --volume home,kind=host,source=/home/core \
-        --mount volume=home,target=/core \
-        --trust-keys-from-https --net=host ${BOOTKUBE_REPO}:${BOOTKUBE_VERSION} --exec \
-        /bootkube -- render --asset-dir=/core/assets --api-servers=https://${COREOS_PUBLIC_IPV4}:443,https://${COREOS_PRIVATE_IPV4}:443
+    /home/core/bootkube render --asset-dir=assets --api-servers=https://${COREOS_PUBLIC_IPV4}:886,https://${COREOS_PRIVATE_IPV4}:443
 
     # Move the local kubeconfig into expected location
     chown -R core:core /home/core/assets
@@ -87,11 +83,7 @@ function init_master_node() {
     systemctl enable kubelet; sudo systemctl start kubelet
 
     # Start bootkube to launch a self-hosted cluster
-    /usr/bin/rkt run \
-        --volume home,kind=host,source=/home/core \
-        --mount volume=home,target=/core \
-        --net=host ${BOOTKUBE_REPO}:${BOOTKUBE_VERSION} --exec \
-        /bootkube -- start --asset-dir=/core/assets
+    /home/core/bootkube start --asset-dir=assets
 }
 
 [ "$#" == 1 ] || usage
@@ -109,6 +101,7 @@ if [ "${REMOTE_HOST}" != "local" ]; then
     ssh -i ${IDENT} -p ${REMOTE_PORT} core@${REMOTE_HOST} "sudo mv /home/core/kubelet.master /etc/systemd/system/kubelet.service"
 
     # Copy self to remote host so script can be executed in "local" mode
+    scp -i ${IDENT} -P ${REMOTE_PORT} bootkube core@${REMOTE_HOST}:/home/core/bootkube
     scp -i ${IDENT} -P ${REMOTE_PORT} ${BASH_SOURCE[0]} core@${REMOTE_HOST}:/home/core/init-master.sh
     ssh -i ${IDENT} -p ${REMOTE_PORT} core@${REMOTE_HOST} "sudo /home/core/init-master.sh local"
 
